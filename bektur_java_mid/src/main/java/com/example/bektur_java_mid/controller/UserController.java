@@ -10,10 +10,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-    @PostMapping("/add")
-    public void register(@RequestParam String email){
-        userService.register(email);
+
+    @PostMapping("/register")
+    public void register(@RequestParam String email, @RequestParam String password){
+        userService.register(email, password);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password){
+        return userService.login(email, password);
+    }
+
+    @GetMapping("/confirm")
+    public String confir(@RequestParam String code){
+        return userService.confirm(code);
+    }
+
+
     @GetMapping("/{userId}")
     public UserResponse userResponse(@PathVariable Long userId){
         return userService.getById(userId);
